@@ -1,4 +1,4 @@
-const bindFn = require('./index')
+const { bind : bindFn } = require('./index')
 
 Function.prototype.bindFn = bindFn
 

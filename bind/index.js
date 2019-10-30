@@ -30,20 +30,14 @@ const bind = function(thisArg, ...boundArgs) {
     }
   }
 
+  // reset bound arguments length & name
   Object.defineProperties(bound, {
-    length: {
-      value: fn.length
-    },
-    name: {
-      value: `bound` + (fn.name ? ' ' + fn.name : '')
-    }
+    length: { value: fn.length },
+    name: { value: `bound ${fn.name}` }
   })
 
   return bound
 }
-
-
-const bindEs6 = function() {}
 
 module.exports = {
   bind
