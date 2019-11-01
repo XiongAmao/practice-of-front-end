@@ -108,6 +108,7 @@ class Promise {
           resolve(result)
         }, error => {
           if (done) return
+          done = true
           reject(error)
         })
       }
