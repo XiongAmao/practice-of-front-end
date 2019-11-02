@@ -46,7 +46,7 @@ class Promise {
       if (this.state === PENDING) {
         this.callbacks.push(callback)
       } else {
-        // 2.2.4 / 3.1 
+        // 2.2.4 / 3.1
         // 通过js实现，无法修改调用栈，这里通过setTimeout实现异步调用
         setTimeout(() => handleCallback(callback, this.state, this.result), 0)
       }
@@ -55,6 +55,16 @@ class Promise {
 
   catch(onRejected) {
     return this.then(null, onRejected)
+  }
+
+  finally(onFinally) {
+    return this.then(
+      (res) => Promise.resolve(onFinally()).then(() => res),
+      (err) =>
+        Promise.resolve(onFinally()).then(() => {
+          throw err
+        })
+    )
   }
 
   static resolve(value) {
@@ -100,17 +110,20 @@ class Promise {
     let done = false
 
     return new Promise((resolve, reject) => {
-      for(const p of promises) {
+      for (const p of promises) {
         count++
-        Promise.resolve(p).then((result) => {
-          if (done) return
-          done = true
-          resolve(result)
-        }, error => {
-          if (done) return
-          done = true
-          reject(error)
-        })
+        Promise.resolve(p).then(
+          (result) => {
+            if (done) return
+            done = true
+            resolve(result)
+          },
+          (error) => {
+            if (done) return
+            done = true
+            reject(error)
+          }
+        )
       }
     })
   }
@@ -139,7 +152,7 @@ const handleCallback = (callback, state, result) => {
     if (state === FULFILLED) {
       isFunction(onFulfilled) ? resolve(onFulfilled(result)) : resolve(result)
     } else if (state === REJECTED) {
-      isFunction(onRejected) ? resolve(onRejected(result)) : reject(result) 
+      isFunction(onRejected) ? resolve(onRejected(result)) : reject(result)
       // 如果有注册catch或者onRejected
     }
   } catch (error) {
