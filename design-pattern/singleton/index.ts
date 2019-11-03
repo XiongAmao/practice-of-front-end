@@ -1,6 +1,6 @@
 const singletonSymbol = Symbol('singleton')
 
-class Singleton {
+export class Singleton {
   constructor() {
     const sourceClass = this.constructor
 
