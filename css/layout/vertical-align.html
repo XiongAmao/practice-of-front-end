@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .box {
+      border: 1px red solid;
+      height: 99px;
+      width: 400px;
+    }
+
+    .out-1::after {
+      content: '';
+      height: 100%;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .in-1 {
+      display: inline-block;
+      vertical-align: middle;
+      border: blue solid 1px;
+    }
+
+    .out-2 {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .in-2 {
+      display: inline-block;
+    }
+
+    .out-flex {
+      display: flex;
+      align-items: center;
+    }
+
+    .out-absolute {
+      position: relative;
+    }
+
+    .in-absolute {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box out-1">
+    <div class="in-1">123123</div>
+  </div>
+
+  <div class="box out-2">
+    <div class="in-2">123123</div>
+  </div>
+
+  <div class="box out-flex">
+    <div class="in-flex">123123</div>
+  </div>
+  <div class="box out-absolute">
+    <div class="in-absolute">123123</div>
+  </div>
+</body>
+
+</html>
