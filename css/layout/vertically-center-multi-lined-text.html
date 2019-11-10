@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vertically Center Multi-Lined Text</title>
+  <style>
+    .area {
+      width: 400px;
+      height: 300px;
+      border: 1px solid;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .area-1 {
+      display: table;
+    }
+
+    .area-1 p {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .area-2 .content {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .area-2 p::after {
+      display: inline;
+      content: '';
+      line-height: 300px;
+      font-size: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="area area-1">
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic sed molestiae distinctio tempore voluptates quas,
+      expedita saepe, repellendus cumque nisi ex nobis facere illum est tenetur nesciunt. Sapiente, cupiditate! Alias!
+    </p>
+  </div>
+
+  <div class="area area-2">
+    <p>
+      <span class="content">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic sed molestiae distinctio tempore voluptates quas,
+          expedita saepe, repellendus cumque nisi ex nobis facere illum est tenetur nesciunt. Sapiente, cupiditate! Alias!
+      </span>
+    </p>
+  </div>
+</body>
+
+</html>
