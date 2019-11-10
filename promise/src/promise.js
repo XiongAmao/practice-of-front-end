@@ -2,11 +2,11 @@ const PENDING = 'pending'
 const FULFILLED = 'fulfilled'
 const REJECTED = 'rejected'
 
-const isObject = (obj) => !!(obj && typeof obj === 'object')
+const isObject = (obj) => !!obj && typeof obj === 'object'
 const isFunction = (fn) => typeof fn === 'function'
 const isPromise = (p) => p instanceof Promise
 const isThenable = (obj) => (isFunction(obj) || isObject(obj)) && 'then' in obj
-const isIterable = (obj) => !!(isObject(obj) && typeof obj[Symbol.iterator] === 'function')
+const isIterable = (obj) => isObject(obj) && isFunction(obj[Symbol.iterator])
 
 class Promise {
   constructor(fn) {
@@ -73,7 +73,7 @@ class Promise {
 
   static all(promises) {
     if (!isIterable(promises)) {
-      throw new TypeError('')
+      throw new TypeError(promises + 'is not iterable')
     }
 
     const results = []
@@ -105,13 +105,12 @@ class Promise {
 
   static race(promises) {
     if (!isIterable(promises)) {
-      throw new TypeError('')
+      throw new TypeError(promises + 'is not iterable')
     }
     let done = false
 
     return new Promise((resolve, reject) => {
       for (const p of promises) {
-        count++
         Promise.resolve(p).then(
           (result) => {
             if (done) return
