@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Text Eliipsis</title>
+  <style>
+    .single {
+      width: 400px;
+      height: 2em;
+      line-height: 1em;
+      border: 1px solid;
+      
+      /* ellipsis */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .multiline {
+      margin-top: 20px;
+      border: 1px solid;
+      width: 400px;
+      line-height: 1em;
+      height: 3em;
+
+      overflow: hidden;
+      /* not display: flex */
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="single">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati rem aliquid necessitatibus ea. Distinctio
+    nesciunt excepturi, blanditiis nam qui quidem saepe, dolorem ipsum nisi ea aliquam doloremque dignissimos, sequi
+    quisquam.
+  </div>
+  <div class="multiline">
+    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum omnis, rem praesentium assumenda ad doloribus adipisci voluptate possimus consequuntur magni necessitatibus. Cum error repellat magnam impedit facere vel cupiditate accusantium.
+  </div>
+</body>
+
+</html>
