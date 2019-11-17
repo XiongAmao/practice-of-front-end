@@ -14,7 +14,7 @@ function throttle (func, wait, trailing = true) {
       exec()
     } else {
       if (trailing) {
-        setTimeout(() => {
+        timeout = setTimeout(() => {
           exec()
         }, elapsed - wait)
       }
