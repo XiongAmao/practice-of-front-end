@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>White space</title>
+  <style>
+    .box {
+      width: 200px;
+      background-color: #ccc;
+      margin-bottom: 20px;
+      white-space: normal;
+    }
+
+    .code {
+      border: 1px solid #ccc;
+      width: 400px;
+      padding: 16px;
+      white-space: pre-wrap;
+    }
+
+    .nowrap {
+      white-space: nowrap;
+    }
+
+    .pre {
+      white-space: pre;
+    }
+
+    .pre-line {
+      white-space: pre-line;
+    }
+
+    .pre-wrap {
+      white-space: pre-wrap;
+    }
+
+    .break-spaces {
+      white-space: break-spaces;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 处理元素中的空白 -->
+  <p>
+    说明：处理元素中的white-space(空白区域), 行为包括：换行符(br/\n)/空格和制表符(space)/文字转行
+  </p>
+  <pre class="code">example element：
+
+&lt;div class="box"&gt; 
+  巨消密秋显没土笔题底招趣冲怀草楼塞记时退浪味勒深。
+  示归车五蒙伦造宫觉息天倒。 
+&lt;/div&gt;
+  </pre>
+
+  <p> normal: 换行符：合并 / space：合并 / text: 转行 </p>
+  <div class="box">
+    巨消密秋显没土笔题底招趣冲怀草楼塞记时退浪味勒深。
+    示归车五蒙伦造宫觉息天倒。
+  </div>
+
+  <p> nowrap: 换行符：合并 / space：合并 / text: 不转行 </p>
+  <div class="box nowrap">
+    巨消密秋显没土笔题底招趣冲怀草楼塞记时退浪味勒深。
+    示归车五蒙伦造宫觉息天倒。
+  </div>
+
+  <p> pre: 换行符：保留 / space：保留 / text: 不转行 </p>
+  <div class="box pre">
+    巨消密秋显没土笔题底招趣冲怀草楼塞记时退浪味勒深。
+    示归车五蒙伦造宫觉息天倒。
+  </div>
+
+  <p> pre-wrap: 换行符：保留 / space：保留 / text: 转行 </p>
+  <div class="box pre-wrap">
+    巨消密秋显没土笔题底招趣冲怀草楼塞记时退浪味勒深。
+    示归车五蒙伦造宫觉息天倒。
+  </div>
+
+  <p> pre-line: 换行符：保留 / space：合并 / text: 转行 </p>
+  <div class="box pre-line">
+    巨消密秋显没土笔题底招趣冲怀草楼塞记时退浪味勒深。
+    示归车五蒙伦造宫觉息天倒。
+  </div>
+
+  <p> break-spaces: 换行符：保留 / space：保留 / text: 转行 </p>
+  <div class="box break-spaces">
+    巨消密秋显没土笔题底招趣冲怀草楼塞记时退浪味勒深。
+    示归车五蒙伦造宫觉息天倒。
+  </div>
+</body>
+
+</html>
