@@ -45,3 +45,18 @@ let result = [].concat(...arr)
 result = [].concat.apply([], arr)
 
 result = arr.reduce((acc, val) => acc.concat(val))
+
+/**
+ * skip empty
+ * 
+ * Array prototype method: 
+ * forEach() / reduce() / every() / some()
+ * 
+ * map() skip and keep the value  
+ **/ 
+
+ /**
+  * empty to undefined
+  * entries() / keys() / values() / find() / findIndex() 
+  * 
+  */
