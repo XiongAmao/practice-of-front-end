@@ -22,11 +22,22 @@ function uniqueDoubleLoop(arr) {
   return res
 }
 
-function uniqueSet (arr) {
+function uniqueSet(arr) {
   return [...new Set(arr)]
+}
+
+function uniqueIndexof(arr) {
+  const res = []
+  for (let i = 0; i < arr.length; i++) {
+    if (res.indexOf(arr[i]) === -1) {
+      res.push(arr[i])
+    }
+  }
+  return res
 }
 
 module.exports = {
   uniqueDoubleLoop,
-  uniqueSet
+  uniqueSet,
+  uniqueIndexof
 }
