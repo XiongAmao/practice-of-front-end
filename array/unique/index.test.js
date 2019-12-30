@@ -1,4 +1,4 @@
-const { uniqueDoubleLoop } = require('./index')
+const { uniqueDoubleLoop, uniqueSet } = require('./index')
 
 const createCase = () => {
   const objA = { a: 4 }
@@ -13,6 +13,13 @@ describe('Remove duplicate values from JS array', () => {
   test('unique double loop function', () => {
     const { input, answer } = createCase()
     const result = uniqueDoubleLoop(input)
+    expect(answer).toEqual(expect.arrayContaining(result))
+    expect(result).toEqual(expect.arrayContaining(answer))
+  })
+
+  test('use Set', () => {
+    const { input, answer } = createCase()
+    const result = uniqueSet(input)
     expect(answer).toEqual(expect.arrayContaining(result))
     expect(result).toEqual(expect.arrayContaining(answer))
   })

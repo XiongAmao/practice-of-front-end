@@ -22,17 +22,11 @@ function uniqueDoubleLoop(arr) {
   return res
 }
 
-const createCase = () => {
-  const objA = { a: 4 }
-  const objB = { a: 4 }
-  const input = [1, 2, 2, 1, '3', objA, objB, 3, '3', undefined, [5]]
-  const answer = [1, 2, 3, '3', objA, objB, undefined, [5]]
-
-  return { input, answer }
+function uniqueSet (arr) {
+  return [...new Set(arr)]
 }
 
 module.exports = {
-  uniqueDoubleLoop
+  uniqueDoubleLoop,
+  uniqueSet
 }
-
-const { input } = createCase()
