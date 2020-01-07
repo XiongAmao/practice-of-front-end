@@ -1,8 +1,14 @@
 // source
 function* say() {
   yield 1
+  console.log(1)
+
   yield 2
+  console.log(1)
+
   yield 3
+  console.log(1)
+
   return 'end'
 }
 
@@ -28,24 +34,26 @@ function say() {
     while (1) {
       switch ((_context.prev = _context.next)) {
         case 0:
-          _context.next = 2
-          return 1
+          _context.next = 2;
+          return 1;
 
         case 2:
-          _context.next = 4
-          return 2
+          console.log(1);
+          _context.next = 5;
+          return 2;
 
-        case 4:
-          _context.next = 6
-          return 3
-        
-        // if there has return value
-        case 6:
-          return _context.abrupt('return', 'end')
+        case 5:
+          console.log(1);
+          _context.next = 8;
+          return 3;
 
-        case 7:
-        case 'end':
-          return _context.stop()
+        case 8:
+          console.log(1);
+          return _context.abrupt("return", "end");
+
+        case 10:
+        case "end":
+          return _context.stop();
       }
     }
   }, _marked)
