@@ -14,10 +14,14 @@ const fs = require('fs')
 
 const read = promisify(fs.readFile)
 
-read('1.txt', 'utf8')
+read('files/1.txt', 'utf8')
   .then((data) => {
     console.log(data)
   })
   .catch((err) => {
     console.log(err)
   })
+
+module.exports = {
+  read
+}
