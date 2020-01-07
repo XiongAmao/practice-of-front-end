@@ -1,4 +1,4 @@
-const Promise = require('./src/promise.js')
+const Promise = require('./promise.js')
 
 const resolved = (value) => new Promise((resolve) => resolve(value))
 const rejected = (reason) => new Promise((resolve, reject) => reject(reason))
