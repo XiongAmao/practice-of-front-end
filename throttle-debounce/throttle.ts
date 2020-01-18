@@ -1,5 +1,10 @@
 // 每x秒恒定执行
-export function throttle(func: (...args: any[]) => void, wait: number = 0, trailing = true) {
+export function throttle(
+  func: (...args: any[]) => void,
+  wait: number = 0,
+  leading = true,
+  trailing = true
+) {
   let last = Date.now()
   let timeout: NodeJS.Timeout | null = null
 
@@ -10,13 +15,17 @@ export function throttle(func: (...args: any[]) => void, wait: number = 0, trail
 
     const exec = () => {
       func.apply(this, args)
-      last = Date.now()
     }
 
     if (elapsed >= wait) {
-      exec()
+      last = Date.now()
+      if (leading) exec()
     } else {
-      if (trailing) timeout = setTimeout(exec, wait)
+      if (trailing)
+        timeout = setTimeout(() => {
+          last = Date.now()
+          exec()
+        }, wait - elapsed)
     }
   }
 }

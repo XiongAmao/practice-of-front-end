@@ -1,22 +1,22 @@
-function throttle (func, wait, trailing = true) {
+function throttle(fn, wait, leading = true, trailing = true) {
   let timeout
   let last = 0
-
-  return function (...args) {
+  return function() {
     clearTimeout(timeout)
     const exec = () => {
-      func.apply(this, args)
-      last = Date.now()
+      fn.apply(this, arguments)
     }
     const elapsed = Date.now() - last
 
-    if (elapsed >= wait) {
-      exec()
+    if (elapsed > wait) {
+      last = Date.now()
+      if (leading) exec()
     } else {
       if (trailing) {
         timeout = setTimeout(() => {
+          last = Date.now()
           exec()
-        }, elapsed - wait)
+        }, wait - elapsed)
       }
     }
   }
