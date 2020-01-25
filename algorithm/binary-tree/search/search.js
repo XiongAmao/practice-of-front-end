@@ -15,6 +15,25 @@ function dfsPreOrderTraversal(root) {
   return result
 }
 
+function dfsInOrderTraversal(root) {
+  const result = []
+  const stack = []
+  let cur = root
+
+  while (cur || stack.length > 0) {
+    while (cur) {
+      stack.push(cur)
+      cur = cur.left
+    }
+    if (stack.length > 0) {
+      cur = stack.pop()
+      result.push(cur.val)
+      cur = cur.right
+    }
+  }
+  return result
+}
+
 function bfs(root) {
   const result = []
   const queue = [root]
@@ -33,5 +52,6 @@ function bfs(root) {
 
 module.exports = {
   dfsPreOrderTraversal,
+  dfsInOrderTraversal,
   bfs
 }

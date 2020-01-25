@@ -1,4 +1,4 @@
-const { dfsPreOrderTraversal, bfs } = require('./breadth-first-search')
+const { dfsPreOrderTraversal, bfs, dfsInOrderTraversal } = require('./search')
 
 class TreeNode {
   constructor(val) {
@@ -36,5 +36,10 @@ describe('binary tree search', () => {
   test('deep first search : pre-order traversal', () => {
     const result = dfsPreOrderTraversal(createTree())
     expect(result).toEqual([1, 2, 4, 5, 3, 6])
+  })
+
+  test('deep rist search : in-order traversal', () => {
+    const result = dfsInOrderTraversal(createTree())
+    expect(result).toEqual([4, 2, 5, 1, 3, 6])
   })
 })
