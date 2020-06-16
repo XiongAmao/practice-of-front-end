@@ -126,6 +126,47 @@ class Promise {
       }
     })
   }
+
+  static allSettled(iterator) {
+    if (!isIterable(iterator)) {
+      throw new TypeError(iterator + 'is not iterable')
+    }
+
+    const results = []
+    let count = 0
+    let remain = 1
+
+    return new Promise((resolve, reject) => {
+      for (const p of iterator) {
+        results.push(undefined)
+        const idx = count++
+        remain++
+        let alreadyCalled = false
+
+        const done = (status) => (result) => {
+          if (alreadyCalled) return
+          alreadyCalled = true
+          --remain
+          results[idx] = { status: status }
+          status === 'resolved' ? (results[idx].value = result) : (results[idx].reason = result)
+          if (remain === 0) resolve(results)
+        }
+
+        Promise.resolve(p).then(
+          (result) => {
+            done('resolved')(result)
+          },
+          (err) => {
+            done('rejected')(err)
+          }
+        )
+      }
+      remain--
+      if (remain === 0) {
+        resolve(results)
+      }
+    })
+  }
 }
 
 // promise 状态迁移的公共函数
