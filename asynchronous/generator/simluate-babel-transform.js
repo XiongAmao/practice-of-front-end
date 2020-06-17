@@ -61,7 +61,8 @@ function say() {
           return context.sent
 
         case 'end':
-          return context.stop()
+          context.done = true
+          return
       }
     }
   }
