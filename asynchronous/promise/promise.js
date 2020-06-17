@@ -71,9 +71,9 @@ class Promise {
     return new Promise((resolve) => resolve(value))
   }
 
-  static all(promises) {
-    if (!isIterable(promises)) {
-      throw new TypeError(promises + 'is not iterable')
+  static all(iterable) {
+    if (!isIterable(iterable)) {
+      throw new TypeError(iterable + 'is not iterable')
     }
 
     const results = []
@@ -81,7 +81,7 @@ class Promise {
     let done = false
 
     return new Promise((resolve, reject) => {
-      for (const p of promises) {
+      for (const p of iterable) {
         if (done) return
         const i = count++
 
@@ -99,18 +99,18 @@ class Promise {
         )
       }
       // 堆栈中为空，则立即返回
-      if (count === 0) resolve(promises)
+      if (count === 0) resolve(iterable)
     })
   }
 
-  static race(promises) {
-    if (!isIterable(promises)) {
-      throw new TypeError(promises + 'is not iterable')
+  static race(iterable) {
+    if (!isIterable(iterable)) {
+      throw new TypeError(iterable + 'is not iterable')
     }
     let done = false
 
     return new Promise((resolve, reject) => {
-      for (const p of promises) {
+      for (const p of iterable) {
         Promise.resolve(p).then(
           (result) => {
             if (done) return
@@ -127,29 +127,27 @@ class Promise {
     })
   }
 
-  static allSettled(iterator) {
-    if (!isIterable(iterator)) {
-      throw new TypeError(iterator + 'is not iterable')
+  static allSettled(iterable) {
+    if (!isIterable(iterable)) {
+      throw new TypeError(iterable + 'is not iterable')
     }
 
     const results = []
     let count = 0
-    let remain = 1
 
     return new Promise((resolve, reject) => {
-      for (const p of iterator) {
+      for (const p of iterable) {
         results.push(undefined)
         const idx = count++
-        remain++
         let alreadyCalled = false
 
         const done = (status) => (result) => {
           if (alreadyCalled) return
           alreadyCalled = true
-          --remain
+          count--
           results[idx] = { status: status }
           status === 'resolved' ? (results[idx].value = result) : (results[idx].reason = result)
-          if (remain === 0) resolve(results)
+          if (count === 0) resolve(results)
         }
 
         Promise.resolve(p).then(
@@ -161,8 +159,8 @@ class Promise {
           }
         )
       }
-      remain--
-      if (remain === 0) {
+
+      if (count === 0) {
         resolve(results)
       }
     })
