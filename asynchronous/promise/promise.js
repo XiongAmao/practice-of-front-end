@@ -5,7 +5,8 @@ const REJECTED = 'rejected'
 const isObject = (obj) => !!obj && typeof obj === 'object'
 const isFunction = (fn) => typeof fn === 'function'
 const isPromise = (p) => p instanceof Promise
-const isThenable = (obj) => (isFunction(obj) || isObject(obj)) && 'then' in obj
+const isThenable = (obj) =>
+  (isObject(obj) || isFunction(obj)) && 'then' in obj && isFunction(obj.then)
 const isIterable = (obj) => isObject(obj) && isFunction(obj[Symbol.iterator])
 
 class Promise {
@@ -212,8 +213,10 @@ const resolvePromise = (promise, x, resolve, reject) => {
     return x.then(resolve, reject)
   }
 
-  // 2.3.3 提供互操作性
-  if (isThenable(x)) {
+  // 2.3.3 if x is an object or function
+  // Note that the specification does not require x to be thenable here.
+  if (isFunction(x) || isObject(x)) {
+    // 2.3.3.2 retrieving the x.then
     try {
       const then = x.then
       // 3.5
