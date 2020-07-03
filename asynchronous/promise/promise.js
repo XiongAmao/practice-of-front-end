@@ -68,6 +68,8 @@ class Promise {
   }
 
   static resolve(value) {
+    if (isPromise(value)) return value
+    if (isThenable(value)) return new Promise((resolve, reject) => value.then(resolve, reject))
     return new Promise((resolve) => resolve(value))
   }
 
