@@ -2,7 +2,7 @@ const PENDING = 'pending'
 const FULFILLED = 'fulfilled'
 const REJECTED = 'rejected'
 
-const isObject = (obj) => !!obj && typeof obj === 'object'
+const isObject = (obj) => obj !== null && typeof obj === 'object'
 const isFunction = (fn) => typeof fn === 'function'
 const isPromise = (p) => p instanceof Promise
 const isThenable = (obj) =>
@@ -167,6 +167,22 @@ class Promise {
         resolve(results)
       }
     })
+  }
+
+  static simpleAllSettle(iterable) {
+    if (!isIterable(iterable)) {
+      throw new TypeError(iterable + 'is not iterable')
+    }
+
+    const successAbsolute = (promiseList) => {
+      return promiseList.map((promise) =>
+        promise.then(
+          (v) => ({ status: 'resolved', v }),
+          (e) => ({ status: 'rejected', e })
+        )
+      )
+    }
+    return Promise.all(successAbsolute(iterable))
   }
 }
 
