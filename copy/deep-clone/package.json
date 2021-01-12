@@ -1,0 +1,11 @@
+{
+  "name": "deep-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "deep-clone.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}
