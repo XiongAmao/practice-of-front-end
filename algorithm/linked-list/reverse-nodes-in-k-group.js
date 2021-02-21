@@ -64,7 +64,33 @@ const revert = (head, k = 2) => {
   return arr[0][0]
 }
 
-const revert2 = (head, k = 3) => {}
+const reverse = (a, b) => {
+  let prev = null,
+    cur = a,
+    next = a
+  while (cur !== b) {
+    next = cur.next
+    cur.next = prev
+    prev = cur
+    cur = next
+  }
+
+  return prev
+}
+const revert2 = (head, k) => {
+  if (head === null) return null
+
+  let a = head,
+    b = head
+  for (let i = 0; i < k; i++) {
+    if (b === null) return head
+    b = b.next
+  }
+
+  const newHead = reverse(a, b)
+  a.next = revert2(b, k)
+  return newHead
+}
 
 function test(revert, list, k) {
   const head = createLinkList(list)
@@ -75,8 +101,8 @@ function test(revert, list, k) {
   }
 }
 
-test(revert, [1,2,3,4,5,6], 4)
+test(revert, [1, 2, 3, 4, 5, 6], 4)
 console.log('------')
-test(revert, [1,2,3,4,5,6], 2)
+test(revert, [1, 2, 3, 4, 5, 6], 2)
 console.log('------')
-test(revert, [1,2,3], 3)
+test(revert, [1, 2, 3], 3)
