@@ -182,8 +182,8 @@ class Promise {
     const successAbsolute = (promiseList) => {
       return promiseList.map((promise) =>
         promise.then(
-          (v) => ({ status: 'resolved', v }),
-          (e) => ({ status: 'rejected', e })
+          (value) => ({ status: 'resolved', value }),
+          (reason) => ({ status: 'rejected', reason })
         )
       )
     }
@@ -270,6 +270,5 @@ const runAsyncWithMessageChannel = (cb) => {
   channel.port1.onmessage = cb
   channel.port2.postMessage(1)
 }
-
 
 module.exports = Promise
