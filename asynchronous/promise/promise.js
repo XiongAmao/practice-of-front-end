@@ -49,7 +49,7 @@ class Promise {
       } else {
         // 2.2.4 / 3.1
         // 通过js实现，无法修改调用栈，这里通过setTimeout实现异步调用
-        setTimeout(() => handleCallback(callback, this.state, this.result), 0)
+        runAsync(() => handleCallback(callback, this.state, this.result))
       }
     })
   }
@@ -68,10 +68,15 @@ class Promise {
     )
   }
 
+  // implement es6
   static resolve(value) {
     if (isPromise(value)) return value
     if (isThenable(value)) return new Promise((resolve, reject) => value.then(resolve, reject))
     return new Promise((resolve) => resolve(value))
+  }
+
+  static reject(reason) {
+    return new Promise((_, reject) => reject(reason))
   }
 
   static all(iterable) {
@@ -194,11 +199,11 @@ const transition = (promise, state, result) => {
   promise.result = result
 
   // 这里处理then注册的callback，因此需要通过其他platform Api实现异步调用
-  setTimeout(() => {
+  runAsync(() => {
     while (promise.callbacks.length) {
       handleCallback(promise.callbacks.shift(), state, result)
     }
-  }, 0)
+  })
 }
 
 const handleCallback = (callback, state, result) => {
@@ -246,5 +251,25 @@ const resolvePromise = (promise, x, resolve, reject) => {
 
   resolve(x)
 }
+
+const runAsync = (cb) => {
+  setTimeout(() => {
+    cb()
+  }, 0)
+}
+
+const runAsyncWithMutationObserver = (cb) => {
+  const observer = new MutationObserver(cb)
+  const textNode = document.createTextNode('1')
+  observer.observe(textNode, { characterData: true })
+  textNode.data = '2'
+}
+
+const runAsyncWithMessageChannel = (cb) => {
+  const channel = new MessageChannel()
+  channel.port1.onmessage = cb
+  channel.port2.postMessage(1)
+}
+
 
 module.exports = Promise
