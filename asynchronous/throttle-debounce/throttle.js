@@ -99,3 +99,59 @@ function throttle(
     timer = setTimeout(timeout, wait)
   }
 }
+
+const throttleWithDateCheck = (func, wait = 0, option = { leading: true, trailing: true }) => {
+  let timer = null
+  let lastArgs = null // 最后一次参数
+  let remain = null // 剩余时间
+  let lastExec = 0
+
+  const clear = () => {
+    if (timer) {
+      clearTimeout(timer)
+      timer = null
+    }
+  }
+  return function (...args) {
+    const elapsed = Date.now() - lastExec
+
+    // 如果未开始
+    if (remain === null && option.leading) {
+      func.apply(this, args)
+      lastExec = Date.now()
+      remain = wait
+    }
+    // 如果未超时
+    else if (elapsed < remain) {
+      remain = wait - elapsed
+      lastExec = Date.now()
+      lastArgs = [this, args]
+    }
+    // 如果已经超时，直接执行
+    else if (option.trailing) {
+      remain = null
+      lastArgs = null
+      lastExec = Date.now()
+      func.apply(this, args)
+      return
+    }
+
+    clear()
+
+    const timeout = () => {
+      // 如果尾调，且有上一个参数
+      if (option.trailing && lastArgs) {
+        func.apply(lastArgs[0], lastArgs[1])
+        lastArgs = null
+        remain = wait
+        timer = setTimeout(timeout, remain)
+      } else {
+        timer = null
+        remain = null
+        lastExec = Date.now()
+      }
+    }
+
+    setTimeout(timeout, remain)
+  }
+}
