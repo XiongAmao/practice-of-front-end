@@ -1,18 +1,46 @@
-function debounce(func, delay = 0, leading = false, trailing = true) {
-  let timeout = null
-  let lock = false
+// https://bigfrontend.dev/problem/implement-basic-debounce
+// by default { leading: false, trailing = true }
+function simpleDebounce(func, wait = 0) {
+  let timer = false
   return function(...args) {
-    const exec = () => func.apply(this, args)
-    clearTimeout(timeout)
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      func.apply(this, args)
+    }, wait);
+  }
+}
 
-    if (leading && !lock) {
-      lock = true
-      exec()
+// https://bigfrontend.dev/problem/implement-debounce-with-leading-and-trailing-option
+function debounce(
+  func,
+  wait = 0,
+  option = {
+    // default
+    leading: false,
+    trailing: true
+  }
+) {
+  const { leading, trailing } = option
+  let timer = null
+
+  return function (...args) {
+    // invoked 控制leading=true 且冷却中只调用一次的情况
+    let isInvoked = false
+    const invoke = () => func.apply(this, args)
+    
+    // timer 判断是否已 leading
+    if (leading && timer === null) {
+      invoke()
+      // 冷却内，第二次调用时，则会当前invoked重置为false，当冷却结束时会invoke
+      isInvoked = true
     }
 
-    timeout = setTimeout(() => {
-      if (trailing) exec()
-      lock = false
-    }, delay)
+    // 需要排在leading后
+    clearTimeout(timer)
+
+    timer = setTimeout(() => {
+      if (trailing && !isInvoked) invoke()
+      timer = null
+    }, wait)
   }
 }
