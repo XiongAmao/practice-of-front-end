@@ -26,7 +26,7 @@ function uniqueSet(arr) {
   return [...new Set(arr)]
 }
 
-function uniqueIndexof(arr) {
+function uniqueIndexOf(arr) {
   const res = []
   for (let i = 0; i < arr.length; i++) {
     if (res.indexOf(arr[i]) === -1) {
@@ -36,8 +36,13 @@ function uniqueIndexof(arr) {
   return res
 }
 
+function uniqueFilter(arr) {
+  return arr.filter((val, idx, selfArr) => selfArr.indexOf(val) === idx)
+} 
+
 module.exports = {
   uniqueDoubleLoop,
   uniqueSet,
-  uniqueIndexof
+  uniqueIndexOf,
+  uniqueFilter
 }
