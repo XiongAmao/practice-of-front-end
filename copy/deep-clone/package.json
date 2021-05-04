@@ -2,7 +2,7 @@
   "name": "deep-clone",
   "version": "1.0.0",
   "description": "",
-  "main": "deep-clone.ts",
+  "main": "deep-clone.js",
   "scripts": {
     "test": "jest"
   },
